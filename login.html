@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup - Homework AI</title>
+    <style>
+        /* Your existing styles here */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #000000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 0;
+        }
+
+        .logo img {
+            width: 200px;
+            filter: drop-shadow(0px 0px 5px #fff);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            background: #ffffff33;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        .container {
+            width: 500px; /* Increased width */
+            background-color: #181818;
+            padding: 40px; /* Increased padding */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 15px; /* Increased input padding */
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+            font-size: 1.1rem; /* Increased font size */
+        }
+
+        .container button {
+            width: 100%;
+            padding: 15px; /* Increased button padding */
+            border: none;
+            border-radius: 5px;
+            background-color: #ffcc00;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.1rem; /* Increased font size */
+        }
+
+        .container button:hover {
+            background-color: #e6b800;
+        }
+
+        .toggle-link {
+            margin-top: 15px;
+            color: #ffcc00;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Homework AI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" id="authContainer">
+        <h2 id="formTitle">Login</h2>
+        <form id="authForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p class="toggle-link" id="toggleLink">Don't have an account? Sign up</p>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Homework AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const authForm = document.getElementById('authForm');
+        const formTitle = document.getElementById('formTitle');
+        const toggleLink = document.getElementById('toggleLink');
+        const authContainer = document.getElementById('authContainer');
+
+        // Toggle between login and signup
+        toggleLink.addEventListener('click', () => {
+            if (formTitle.innerText === "Login") {
+                formTitle.innerText = "Sign Up";
+                authForm.querySelector('button').innerText = "Sign Up";
+                toggleLink.innerText = "Already have an account? Login";
+                // Add a field for email in signup
+                authForm.insertAdjacentHTML('beforeend', '<input type="email" id="email" placeholder="Email" required>');
+            } else {
+                formTitle.innerText = "Login";
+                authForm.querySelector('button').innerText = "Login";
+                toggleLink.innerText = "Don't have an account? Sign up";
+                // Remove email field when going back to login
+                const emailField = document.getElementById('email');
+                if (emailField) {
+                    emailField.remove();
+                }
+            }
+        });
+
+        // Handle form submission
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (formTitle.innerText === "Sign Up") {
+                const email = document.getElementById('email').value;
+                // Perform signup logic (e.g., send data to the server)
+                console.log("Signing up with", { username, email, password });
+
+                // Redirect to the dashboard page on successful signup
+                // In a real application, check if signup is successful before redirecting
+                window.location.href = "dashboard.html"; // Redirect to main.html
+            } else {
+                // Perform login logic (e.g., send data to the server)
+                console.log("Logging in with", { username, password });
+                // Redirect to the dashboard page after successful login (this would typically involve a check)
+                window.location.href = "dashboard.html"; // Redirect to main.html
+            }
+            // Reset form
+            authForm.reset();
+        });
+    </script>
+</body>
+</html>

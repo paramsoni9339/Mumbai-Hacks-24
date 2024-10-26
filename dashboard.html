@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard with To-Do List</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #000000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo img {
+            width: 200px;
+            filter: drop-shadow(0px 0px 5px #fff);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            background: #ffffff33;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .dashboard-card {
+            background-color: #1F2A38;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .dashboard-card:hover {
+            background-color: #263445;
+        }
+
+        .todo-input {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .todo-input input[type="text"],
+        .todo-input input[type="date"] {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #333;
+            color: white;
+        }
+
+        .todo-input button {
+            padding: 10px 15px;
+            background-color: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .todo-input button:hover {
+            background-color: #f9b300;
+        }
+
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todo-list li {
+            background-color: #1F2A38;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .todo-list li span {
+            color: #ffcc00;
+        }
+
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .user-name {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .wrap-delete * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .button-delete {
+            user-select: none;
+        }
+
+        .wrap-delete button {
+            width: 150px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background: #e62222;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+            transition: 200ms;
+        }
+
+        .wrap-delete button:hover {
+            background: #ff3636;
+        }
+
+        .wrap-delete button .text {
+            transform: translateX(35px);
+            color: white;
+            font-weight: bold;
+        }
+
+        .wrap-delete button .icon {
+            position: absolute;
+            border-left: 1px solid #c41b1b;
+            transform: translateX(110px);
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrap-delete button svg {
+            width: 15px;
+            fill: #eee;
+        }
+
+        .wrap-delete button:hover .text {
+            color: transparent;
+        }
+
+        .wrap-delete button:hover .icon {
+            width: 150px;
+            border-left: none;
+            transform: translateX(0);
+        }
+
+        .wrap-delete button:focus {
+            outline: none;
+        }
+
+        /* Chart Styles */
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chart-wrapper {
+            width: 200px; /* Increased width for better visibility */
+            margin: 10px;
+        }
+
+        .completed-tasks {
+            margin-top: 20px;
+            text-align: center;
+            color: #ffcc00;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="button">
+            <span class="user-name" id="userName">Welcome, User!</span>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>User Dashboard</h1>
+
+        <div class="dashboard-card">
+            <h2>To-Do List</h2>
+            <div class="todo-input">
+                <input type="text" id="todoItem" placeholder="Enter your task">
+                <input type="date" id="todoDate">
+                <button onclick="addToDo()">Add</button>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>Completed Tasks Graph</h2>
+            <div class="charts-container" id="chartsContainer"></div>
+            <div class="completed-tasks" id="completedTasksNames"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Homework AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const userName = "John Doe"; // Example user name
+        document.getElementById('userName').innerText = `Welcome, ${userName}!`;
+
+        // Chart.js setup
+        const chartsContainer = document.getElementById('chartsContainer');
+        const completedTasksNames = document.getElementById('completedTasksNames');
+        const completedTasks = []; // Store names of completed tasks
+
+        function addToDo() {
+            const itemInput = document.getElementById('todoItem');
+            const dateInput = document.getElementById('todoDate');
+            const itemValue = itemInput.value;
+            const dateValue = dateInput.value;
+
+            if (itemValue === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            const todoList = document.getElementById('todoList');
+            const listItem = document.createElement('li');
+
+            // Task text
+            const taskText = document.createElement('span');
+            taskText.innerText = itemValue;
+            listItem.appendChild(taskText);
+
+            // Date
+            const dateText = document.createElement('span');
+            dateText.innerText = dateValue ? ` (Due: ${dateValue})` : '';
+            listItem.appendChild(dateText);
+
+            // Remove button
+            const removeButton = document.createElement('div');
+            removeButton.classList.add('wrap-delete');
+            removeButton.innerHTML = `
+                <button>
+                    <span class="text">Remove</span>
+                    <span class="icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 6h18M9 6v12m6-12v12" />
+                        </svg>
+                    </span>
+                </button>
+            `;
+            removeButton.onclick = function() {
+                todoList.removeChild(listItem);
+                completedTasks.push(itemValue); // Add task name to completed tasks
+                updateGraphs(itemValue);
+            };
+
+            listItem.appendChild(removeButton);
+            todoList.appendChild(listItem);
+            itemInput.value = '';
+            dateInput.value = '';
+        }
+
+        function updateGraphs(taskName) {
+            if (completedTasks.length > 5) {
+                // Clear existing graphs and task names
+                chartsContainer.innerHTML = '';
+                completedTasksNames.innerHTML = '';
+                completedTasks.length = 0; // Reset the completedTasks array
+            }
+
+            const chartWrapper = document.createElement('div');
+            chartWrapper.className = 'chart-wrapper';
+
+            const ctx = document.createElement('canvas');
+            ctx.id = `myChart${completedTasks.length}`; // Unique ID for each chart
+            chartWrapper.appendChild(ctx);
+            chartsContainer.appendChild(chartWrapper);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [taskName],
+                    datasets: [{
+                        label: 'Completed Tasks',
+                        data: [1],
+                        backgroundColor: '#ffcc00',
+                        borderColor: '#e6a700',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1 // Set maximum to 1 for better clarity
+                        }
+                    }
+                }
+            });
+
+            completedTasksNames.innerHTML += `<div>${taskName}</div>`;
+        }
+    </script>
+
+
+<script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2024/10/25/22/20241025225506-3VL608AW.js"></script>
+    
+
+
+</body>
+</html>

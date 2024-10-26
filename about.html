@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework AI</title>
+    <style>
+        /* Resetting some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and font styling */
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #000000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Logo styling */
+        .logo img {
+            width: 200px;
+            filter: drop-shadow(0px 0px 5px #fff);
+        }
+
+        /* Navigation styling */
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            background: #ffffff33;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav a:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+
+        /* Download button styling */
+        .button {
+            display: flex;
+            align-items: center;
+        }
+
+        .button button {
+            background-color: #ffcc00;
+            color: #000000;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hero section styling */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: url('background.jpg') no-repeat center center/cover;
+            position: relative;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero h1, .hero h2, .hero p, .hero button {
+            position: relative;
+            z-index: 2;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+
+        .hero h2 {
+            color: #69CDBA;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero button {
+            padding: 10px 20px;
+            background: #000000;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .hero button:hover {
+            background: #000000;
+        }
+
+        /* Features section styling */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 30px;
+            background-color: #181818;
+        }
+
+        .feature {
+            text-align: center;
+            border: 1px solid #444;
+            padding: 15px;
+            margin: 10px;
+            width: 28%;
+            color: white;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .feature:hover {
+            transform: scale(1.05);
+            background-color: #333;
+        }
+
+        /* Call-to-action section */
+        .cta {
+            text-align: center;
+            padding: 40px 20px;
+            background: #333;
+        }
+
+        /* Services grid styling */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px; /* Increased gap between the boxes */
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto; /* Centering the grid */
+        }
+
+        /* Individual service card styling */
+        .service-card {
+            background-color: #1F2A38;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+        }
+
+        /* Icon styling for each card */
+        .service-card i {
+            font-size: 2.5rem;
+            color: #69CDBA;
+            margin-bottom: 10px;
+        }
+
+        /* Title and description for each card */
+        .service-card h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: #D0D0D0;
+        }
+
+        /* Hover effect on service cards */
+        .service-card:hover {
+            background-color: #263445;
+            box-shadow: 0 0 30px #ffe063; /* Enhanced glow on hover */
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            header {
+                flex-direction: column;
+            }
+
+            nav ul {
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            /* Hero adjustments */
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            /* Feature adjustments */
+            .features {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .feature {
+                width: 90%;
+                margin-bottom: 15px;
+            }
+
+            /* Services grid adjustments */
+            .services-grid {
+                grid-template-columns: 1fr; /* Stack cards on smaller screens */
+            }
+        }
+
+        .btn-77,
+.btn-77 *,
+.btn-77 :after,
+.btn-77 :before,
+.btn-77:after,
+.btn-77:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-77 {
+  -webkit-tap-highlight-color: 
+transparent;
+  -webkit-appearance: button;
+  background-color: 
+#000;
+  background-image: none;
+  color: 
+#fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+}
+.btn-77:disabled {
+  cursor: default;
+}
+.btn-77:-moz-focusring {
+  outline: auto;
+}
+.btn-77 svg {
+  display: block;
+  vertical-align: middle;
+}
+.btn-77 [hidden] {
+  display: none;
+}
+.btn-77 {
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse 2s infinite;
+  border: 1px solid;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2em 
+transparent;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 900;
+  -webkit-mask-image: none;
+  overflow: hidden;
+  padding: 1.2rem 3rem;
+  position: relative;
+  text-transform: uppercase;
+}
+@-webkit-keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 
+#fff;
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 
+#fff;
+  }
+}
+
+
+
+
+
+.btn-41,
+.btn-41 *,
+.btn-41 :after,
+.btn-41 :before,
+.btn-41:after,
+.btn-41:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.btn-41 {
+  -webkit-tap-highlight-color: 
+transparent;
+  -webkit-appearance: button;
+  background-color: 
+#000;
+  background-image: none;
+  color: 
+#fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+}
+.btn-41:disabled {
+  cursor: default;
+}
+.btn-41:-moz-focusring {
+  outline: auto;
+}
+.btn-41 svg {
+  display: block;
+  vertical-align: middle;
+}
+.btn-41 [hidden] {
+  display: none;
+}
+.btn-41 {
+  border: 2px solid 
+#fff;
+  border-radius: 999px;
+  box-sizing: border-box;
+  display: block;
+  font-weight: 900;
+  overflow: hidden;
+  padding: 1.1rem 3rem;
+  position: relative;
+  text-transform: uppercase;
+}
+.btn-41 span {
+  mix-blend-mode: difference;
+}
+.btn-41:before {
+  background: 
+#fff;
+  border-radius: 999px;
+  content: "";
+  inset: 0;
+  position: absolute;
+  transition: transform 0.2s;
+}
+.btn-41:hover:before {
+  transform: scale(0.8);
+}
+
+
+
+
+.content {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: #69CDBA;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin: 10px 0 20px;
+            color: #D0D0D0;
+            line-height: 1.6;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/index.html"><img src="logo.png" alt="Homework AI Logo" ></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="#features" style="scroll-behavior: smooth;">Features</a></li>
+                  <li><a href="/about.html">About</a></li>
+                  <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="button">
+            <button class="btn-77"> Try Now!</button>
+        </div>
+    </header>
+    <div class="content">
+        <h1>About Us</h1>
+
+        <h2>What We Do</h2>
+        <p>We're building a powerful tool designed to help students master their coursework and retain knowledge over time. Our platform periodically quizzes you on past topics, pinpointing areas where you may need a refresher. By identifying knowledge gaps early on, we empower you to strengthen your understanding and achieve better long-term results.</p>
+
+        <h2>Why It Matters</h2>
+        <p>Forgetting is a natural part of learning. But with our tool, you can actively combat this challenge. By consistently reviewing and reinforcing key concepts, you'll develop a deeper, more lasting understanding of the subject matter. This leads to improved grades, increased confidence, and a solid foundation for future academic and professional success.</p>
+
+        <h2>Our Value Proposition</h2>
+        <p><strong>Personalized Learning:</strong> Tailored quizzes based on your individual learning pace and needs.</p>
+        <p><strong>Efficient Study:</strong> Focus your efforts on the areas that matter most.</p>
+        <p><strong>Long-Term Retention:</strong> Build a strong knowledge base that lasts.</p>
+        <p><strong>Improved Academic Performance:</strong> Achieve higher grades and boost your overall GPA.</p>
+
+        <h2>Join Us</h2>
+        <p>Join us on your journey to lifelong learning.</p>
+    </div>
+
+    <footer>
+        <p>© 2024 Learn AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>
